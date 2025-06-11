@@ -1,38 +1,107 @@
-.App {
-  text-align: center;
+/* Estilos globais básicos para remover margens e paddings padrão do navegador */
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Evita barras de rolagem desnecessárias */
+  background-color: #000; /* Fundo preto para preencher espaços vazios */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Container principal da aplicação */
+.app-container {
+  position: relative; /* Essencial para o posicionamento absoluto dos filhos */
+  width: 100vw; /* Ocupa 100% da largura da viewport */
+  height: 100vh; /* Ocupa 100% da altura da viewport */
+  display: flex; /* Usamos flexbox para centralizar o conteúdo */
+  justify-content: center; /* Centraliza o conteúdo horizontalmente */
+  align-items: center; /* Centraliza o conteúdo verticalmente */
+  overflow: hidden; /* Garante que nada transborde */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Estilos para a imagem da nave como fundo */
+.background-nave {
+  display: block; /* Garante que a imagem se comporte como um bloco */
+  max-width: 100%; /* Garante que a imagem não transborde horizontalmente */
+  max-height: 100%; /* Garante que a imagem não transborde verticalmente */
+  object-fit: contain; /* Redimensiona a imagem para caber inteira dentro do contêiner, mantendo sua proporção. Pode deixar barras pretas nas laterais/cima/baixo. */
+  /* A imagem é centralizada automaticamente pelo display: flex do .app-container */
+  /* border: 2px solid blue; /* Descomente para depurar e ver a área da imagem */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* Container para os botões e o display do valor */
+/* Este div será posicionado dinamicamente via JavaScript para cobrir a imagem da nave */
+.overlay-content {
+  position: absolute; /* Permite posicioná-lo sobre a imagem */
+  /* As propriedades abaixo serão definidas dinamicamente por JavaScript usando CSS Custom Properties (variáveis CSS) */
+  width: var(--overlay-width);
+  height: var(--overlay-height);
+  top: var(--overlay-top);
+  left: var(--overlay-left);
+  z-index: 1; /* Garante que este conteúdo fique acima da imagem de fundo */
+  /* border: 2px dashed red; /* Descomente para depurar e ver a área do overlay */
 }
 
-.App-link {
-  color: #61dafb;
+/* Estilos base para todos os botões transparentes */
+.transparent-button {
+  position: absolute; /* Posição absoluta em relação ao .overlay-content */
+  background-color: transparent; /* Torna o botão transparente */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Borda sutil para visualização durante o desenvolvimento */
+  cursor: pointer; /* Indica que é clicável */
+  /* Lembre-se de remover a borda (border: none;) e o background-color: transparent; na versão final se desejar botões totalmente invisíveis */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.transparent-button:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Efeito hover sutil */
+}
+
+/* Posicionamento de cada botão individualmente (ajuste estes valores com base na sua imagem) */
+/* Os valores de top, left, width e height são em porcentagens, tornando-os responsivos em relação ao .overlay-content */
+
+.missao-especial-button {
+  top: 5%; /* Porcentagem do topo do overlay */
+  left: 30%; /* Porcentagem da esquerda do overlay */
+  width: 50%; /* Largura do botão em relação ao overlay */
+  height: 17%; /* Altura do botão em relação ao overlay */
+}
+
+.metas-button {
+  top: 40%;
+  left: 0%;
+  width: 15%;
+  height: 19%;
+}
+
+.player-button {
+  top: 40%;
+  left: 15%;
+  width: 20%;
+  height: 19%;
+}
+
+.dados-button {
+  top: 40%;
+  left: 63%;
+  width: 17%;
+  height: 19%;
+}
+
+.ranking-button {
+  top: 40%;
+  left: 79.5%;
+  width: 20%;
+  height: 19%;
+}
+
+/* Estilos para o display do valor atual */
+.display-valor {
+  position: absolute;
+  top: 27%; /* Posição vertical na imagem */
+  left: 73%; /* Posição horizontal na imagem */
+  background-color: rgba(0, 0, 0, 0); /* Fundo semi-transparente */
+  color: #1a2425; /* Cor da fonte para combinar com o tema */
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 1.2em;
+  font-weight: bold;
 }

@@ -1,0 +1,159 @@
+/* Estilos para o contêiner principal do ranking */
+.ranking-chart-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 900px; /* Aumenta a largura máxima para o tema espacial */
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #00e5ff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+  text-align: center;
+  z-index: 100;
+  max-height: 95vh;
+  overflow-y: auto; /* Mantém a rolagem se houver muitos itens */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Estilos para o título do ranking */
+.ranking-chart-container h2 {
+  color: #00e5ff;
+  margin-bottom: 20px; /* Mais espaço para o título */
+  font-size: 2em; /* Título maior */
+  text-transform: uppercase;
+  text-shadow: 0 0 10px #00e5ff, 0 0 20px rgba(0, 229, 255, 0.5); /* Efeito neon */
+}
+
+/* ------------------------------------------------ */
+/* NOVOS ESTILOS PARA O RANKING DE CORRIDA ESPACIAL */
+/* ------------------------------------------------ */
+
+.space-ranking-layout {
+  background-size: cover; /* Cobre todo o contêiner com a imagem de fundo */
+  background-repeat: no-repeat;
+  background-position: center;
+  /* Pode adicionar um overlay sutil na imagem de fundo para que o texto se destaque */
+  background-blend-mode: multiply; /* Mistura o background-color com a imagem */
+}
+
+.space-ranking-elements {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espaço maior entre as linhas de exploradores */
+}
+
+.space-explorer-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  background-color: rgba(0, 229, 255, 0.05); /* Fundo sutil para cada linha */
+  border-radius: 5px;
+  border: 1px solid rgba(0, 229, 255, 0.1); /* Borda sutil */
+  position: relative; /* Para o ícone da nave e rastro */
+  min-height: 40px; /* Altura mínima para a linha */
+}
+
+.explorer-rank {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #fff;
+  width: 30px; /* Largura fixa para a posição */
+  text-align: center;
+  flex-shrink: 0;
+  text-shadow: 0 0 5px #00e5ff;
+}
+
+.explorer-name {
+  font-weight: bold;
+  color: #fff;
+  text-align: left;
+  flex-grow: 1; /* Permite que o nome ocupe espaço */
+  min-width: 120px; /* Largura mínima para o nome */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.progress-track {
+  flex-grow: 2; /* Ocupa mais espaço que o nome */
+  height: 25px; /* Altura da "trilha" */
+  background-color: rgba(255, 255, 255, 0.05); /* Fundo da trilha vazia */
+  border-radius: 15px; /* Bordas arredondadas para a trilha */
+  overflow: hidden; /* Garante que o preenchimento não vaze */
+  position: relative; /* Para o ícone da nave dentro */
+  margin-right: 15px; /* Espaço à direita */
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, #00e5ff, #8a2be2); /* Gradiente de cor para o rastro */
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* A nave e pontos ficam à direita do preenchimento */
+  padding-right: 5px; /* Espaço para o conteúdo dentro da barra */
+  box-sizing: border-box;
+  transition: width 0.8s ease-out; /* Animação mais suave */
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.7); /* Brilho no rastro */
+}
+
+.spaceship-icon {
+  height: 30px; /* Tamanho da nave */
+  width: auto;
+  margin-right: 5px; /* Espaço entre a nave e os pontos */
+  /* Adicione uma animação de "flutuar" se desejar */
+  animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-3px); }
+  100% { transform: translateY(0px); }
+}
+
+.explorer-points {
+  color: #fff;
+  font-weight: bold;
+  font-size: 1em;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilos para a mensagem de erro do ranking */
+.ranking-chart-container.error {
+  background-color: rgba(255, 0, 0, 0.8);
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+/* Estilos para o botão de fechar (X) */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  color: #00e5ff;
+  border: 1px solid #00e5ff;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  z-index: 1;
+}
+
+.close-button:hover {
+  background-color: #00e5ff;
+  color: #000;
+}
