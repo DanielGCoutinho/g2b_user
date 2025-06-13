@@ -2,14 +2,22 @@ import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import naveImage from './assets/nave.png';
 import RankingChart from './RankingChart';
+import PlayerSelection from './PlayerSelection'; // Importa o novo componente
 
 function App() {
   const [valor, setValor] = useState(0);
+  const [showPlayerSelection, setShowPlayerSelection] = useState(false); // NOVO ESTADO
+  const [selectedAvatar, setSelectedAvatar] = useState(null); // NOVO ESTADO para guardar o avatar selecionado
+
   const naveRef = useRef(null);
   const overlayRef = useRef(null);
 
   const handleClick = (novoValor) => {
-    setValor(novoValor);
+    if (novoValor === 3) { // Se o valor for 3 (botão Player)
+      setShowPlayerSelection(true); // Mostra a janela de seleção
+    } else {
+      setValor(novoValor); // Define o valor normal para outros botões
+    }
     console.log(`Valor atualizado para: ${novoValor}`);
   };
 
@@ -18,7 +26,16 @@ function App() {
     console.log('Ranking fechado. Valor resetado para: 0');
   };
 
-  // Linha 54: Início do useEffect que precisa de refatoração
+  const handleClosePlayerSelection = () => { // NOVA FUNÇÃO para fechar a seleção do player
+    setShowPlayerSelection(false);
+  };
+
+  const handleSelectAvatar = (avatarSrc) => { // NOVA FUNÇÃO para lidar com a seleção do avatar
+    setSelectedAvatar(avatarSrc);
+    console.log('Avatar selecionado:', avatarSrc);
+    // Aqui você pode fazer algo com o avatar selecionado, como armazenar no localStorage
+  };
+
   useEffect(() => {
     const adjustOverlay = () => {
       if (naveRef.current && overlayRef.current) {
@@ -31,26 +48,19 @@ function App() {
       }
     };
 
-    // Armazena a referência atual do elemento em uma variável local
-    const currentNaveRef = naveRef.current; 
+    const currentNaveRef = naveRef.current;
 
-    // Ajusta o overlay inicialmente
     adjustOverlay();
 
-    // Adiciona event listeners para reajustar o overlay em redimensionamento de janela
     window.addEventListener('resize', adjustOverlay);
 
-    // Adiciona event listener para reajustar quando a imagem for completamente carregada
-    // Usamos 'currentNaveRef' aqui
     if (currentNaveRef) {
         currentNaveRef.addEventListener('load', adjustOverlay);
     }
 
-    // Função de limpeza: remove os event listeners quando o componente é desmontado
-    // Usamos 'currentNaveRef' aqui também
     return () => {
       window.removeEventListener('resize', adjustOverlay);
-      if (currentNaveRef) { // Verifica se a referência ainda existe antes de remover o listener
+      if (currentNaveRef) {
           currentNaveRef.removeEventListener('load', adjustOverlay);
       }
     };
@@ -80,7 +90,7 @@ function App() {
 
         <button
           className="transparent-button player-button"
-          onClick={() => handleClick(3)}
+          onClick={() => handleClick(3)} // Agora handleClick(3) vai abrir a seleção de avatar
           aria-label="Player"
         ></button>
 
@@ -98,10 +108,19 @@ function App() {
 
         <div className="display-valor">
           Valor: {valor}
+          {selectedAvatar && ( // Mostra o avatar selecionado (opcional)
+            <img src={selectedAvatar} alt="Avatar do Jogador" className="current-player-avatar" />
+          )}
         </div>
       </div>
 
       {valor === 5 && <RankingChart onClose={handleCloseRanking} />}
+      {showPlayerSelection && ( // Renderiza o PlayerSelection se showPlayerSelection for true
+        <PlayerSelection 
+          onClose={handleClosePlayerSelection} 
+          onSelectAvatar={handleSelectAvatar} 
+        />
+      )}
     </div>
   );
 }

@@ -105,3 +105,19 @@ body, html, #root {
   font-size: 1.2em;
   font-weight: bold;
 }
+/* ... (seu CSS existente do App.css) ... */
+
+.display-valor {
+  /* ... (estilos existentes) ... */
+  display: flex; /* Para alinhar o texto e o avatar */
+  align-items: center;
+  gap: 10px;
+}
+
+.current-player-avatar {
+  width: 40px; /* Tamanho do avatar no display */
+  height: 40px;
+  border-radius: 50%; /* Redondo */
+  object-fit: cover;
+  border: 2px solid #00e5ff; /* Borda neon */
+}

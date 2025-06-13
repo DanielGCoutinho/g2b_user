@@ -1,0 +1,187 @@
+/* Overlay que cobre toda a tela */
+.player-selection-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85); /* Fundo semi-transparente escuro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 101;
+}
+
+/* Modal da seleção de avatar */
+.player-selection-modal {
+  background-color: black; /* Fundo preto para as áreas da modal não cobertas pela arena */
+  color: #00e5ff;
+  padding: 0; /* Remover padding da modal para que a arena ocupe tudo */
+  border-radius: 10px;
+  /* Borda azul removida */
+  width: 90%;
+  max-width: 600px; /* Largura máxima para não ficar muito largo em telas grandes */
+  height: 90%;
+  max-height: 550px; /* Altura máxima para não ficar muito alta */
+  position: relative; /* Essencial para o botão de fechar e título */
+  display: flex;
+  flex-direction: column; /* Organiza título e a arena-display-wrapper verticalmente */
+  align-items: center; /* Centraliza horizontalmente o título */
+  justify-content: flex-start; /* Alinha o título ao topo */
+  overflow: hidden; /* Garante que as bordas arredondadas funcionem */
+}
+
+/* Título "Selecione seu Avatar" */
+.player-selection-modal h3 {
+  margin-top: 20px;
+  margin-bottom: 15px;
+  font-size: 1.6em;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px #00e5ff;
+  background-color: rgba(0, 0, 0, 0.6); /* Fundo semi-transparente para o texto se destacar */
+  padding: 5px 15px;
+  border-radius: 5px;
+  z-index: 3; /* Mais alto que a imagem e conteúdo */
+}
+
+/* Botão de fechar (X) */
+.player-selection-modal .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  color: #00e5ff;
+  border: 1px solid #00e5ff;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  z-index: 3;
+}
+
+.player-selection-modal .close-button:hover {
+  background-color: #00e5ff;
+  color: #1a1a2e;
+}
+
+/* ------------------------------------------------ */
+/* CONTAINER QUE IRÁ EXIBIR A IMAGEM DA ARENA E SERÁ O PAI DE POSICIONAMENTO */
+/* ------------------------------------------------ */
+.arena-display-wrapper {
+  flex-grow: 1; /* Ocupa todo o espaço vertical restante na modal */
+  width: 100%; /* Ocupa 100% da largura da modal */
+  position: relative; /* **ESSENCIAL**: Contexto de posicionamento para a imagem e o overlay de conteúdo */
+  display: flex; /* Para centralizar a imagem da arena dentro dele */
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Garante que a imagem contida não transborde */
+}
+
+/* A imagem da arena como um elemento IMG */
+.arena-background-img {
+  width: 100%;   /* Garante que a imagem sempre tente preencher a largura disponível */
+  height: 100%;  /* Garante que a imagem sempre tente preencher a altura disponível */
+  object-fit: contain; /* **CHAVE**: A imagem se ajusta ao wrapper, mantendo a proporção.
+                           Isso cria as bordas pretas se a proporção do wrapper não for idêntica à da imagem. */
+  z-index: 0; /* Fica no fundo */
+}
+
+/* ------------------------------------------------ */
+/* ÁREA DE CONTEÚDO PRINCIPAL (POSICIONADA ABSOLUTAMENTE SOBRE A IMAGEM DA ARENA) */
+/* ------------------------------------------------ */
+.modal-content-area {
+  position: absolute; /* **ESSENCIAL**: Posiciona sobre a arena-background-img */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Fica sobre a imagem da arena */
+}
+
+/* ------------------------------------------------ */
+/* ESTILOS DO CARROSSEL (AGORA POSICIONADO FIXAMENTE NA IMAGEM DA ARENA) */
+/* ------------------------------------------------ */
+.carousel-container {
+  position: absolute; /* **ESSENCIAL**: Ancorado ao .modal-content-area */
+  top: 40%; /* Ajuste a porcentagem do topo da *área da imagem da arena* */
+  left: 50%; /* 50% da esquerda da *área da imagem da arena* (para centralizar) */
+  transform: translate(-50%, -50%); /* Centraliza o elemento pelo seu próprio centro */
+  
+  display: flex; /* Mantém display flex para organizar as setas e o avatar */
+  align-items: center;
+  justify-content: space-between;
+  
+  width: 70%; /* Largura em relação à *área da imagem da arena* */
+  max-width: 400px; /* **AJUSTE AQUI**: Aumentado para 400px, mas pode ser ajustado para o limite máximo desejado */
+  min-width: 250px; /* **NOVO**: Garante uma largura mínima para não ficar pequeno demais */
+  padding: 0 10px; /* Padding interno para as setas */
+}
+
+.carousel-nav-button {
+  background-color: rgba(0, 229, 255, 0.2);
+  color: #00e5ff;
+  border: 1px solid #00e5ff;
+  border-radius: 50%;
+  width: 45px; /* Tamanho fixo para as setas */
+  height: 45px; /* Tamanho fixo para as setas */
+  font-size: 1.5em;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.carousel-nav-button:hover {
+  background-color: #00e5ff;
+  color: #1a1a2e;
+  transform: scale(1.1);
+}
+
+.current-carousel-avatar-img {
+  /* **MUDANÇA AQUI**: Usando porcentagens para largura e altura */
+  width: 40%; /* **AJUSTE AQUI**: Exemplo de 50% da largura do carousel-container */
+  height: auto; /* Mantém a proporção da imagem. Pode ser também "width: X% / height: X%" */
+  max-width: 200px; /* Define um tamanho máximo para a imagem do avatar para não ficar gigante em telas grandes */
+  max-height: 200px; /* Define um tamanho máximo para a imagem do avatar */
+  object-fit: contain; /* Garante que a imagem do avatar caiba sem cortar */
+  margin: 0 15px;
+  border: none;
+  box-shadow: none;
+  position: absolute; /* **ESSENCIAL**: Ancorado ao .modal-content-area */
+  top: 20%; /* Ajuste a porcentagem do topo da *área da imagem da arena* */
+  left: 26%; 
+}
+
+/* Botão "Escolher" (POSICIONAMENTO ANCORADO) */
+.choose-avatar-button {
+  position: absolute; /* **ESSENCIAL**: Ancorado ao .modal-content-area */
+  top: 88%; /* Ajuste a porcentagem do topo da *área da imagem da arena* */
+  left: 50%; /* 50% da esquerda da *área da imagem da arena* (para centralizar) */
+  transform: translate(-50%, -50%); /* Centraliza o elemento pelo seu próprio centro */
+
+  background-color: #00e5ff;
+  color: #1a1a2e;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  width: auto;
+  max-width: 180px; /* Largura máxima */
+}
+
+.choose-avatar-button:hover {
+  background-color: #8a2be2;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
+}
